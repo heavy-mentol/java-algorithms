@@ -67,23 +67,17 @@ public class MaxCounters{
 		if(n > 100000 || a.length > 100000) return new int[0];
 		
 		int[] counters = new int[n];
+		int max = 0;
 		for(int i = 0; i < a.length; i++){
 			int x = a[i];
-			System.out.println(x);
 			if(x < 1 || x > (n + 1)) return new int[0];
-			if(x >= 1 && x <= n) counters[x - 1] += 1;
-			if(x == n + 1){
-				int max = getMax(counters);
-				updateToMax(counters, max);
+			if(x >= 1 && x <= n){
+				counters[x - 1] += 1;
+				if(max < counters[x - 1]) max = counters[x - 1];
 			}
+			if(x == n + 1) updateToMax(counters, max);
 		}
 		return counters;
-	}
-	
-	private static int getMax(int[] a){
-		int[] b = Arrays.copyOf(a, a.length);
-		Arrays.sort(b);
-		return b[b.length - 1];
 	}
 	
 	private static void updateToMax(int[] a, int max){
